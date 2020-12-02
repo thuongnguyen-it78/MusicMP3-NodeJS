@@ -1,9 +1,9 @@
-const albumRoute = require('./product.route')
-const artistRoute = require('./product.route')
-const authRoute = require('./product.route')
-const songRoute = require('./product.route')
-const userRoute = require('./product.route')
-const meRoute = require('./product.route')
+const albumRoute = require('./album.route')
+const artistRoute = require('./artist.route')
+const authRoute = require('./auth.route')
+const songRoute = require('./song.route')
+const userRoute = require('./user.route')
+const meRoute = require('./me.route')
 const siteRoute = require('./site.route')
 
 
