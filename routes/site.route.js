@@ -1,8 +1,13 @@
 const express = require('express')
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.render('products/index')
+router.get('/', async (req, res) => {
+    const users = await User.find({});
+    let username = []
+    users.map((user) => {
+        return username.push(user.fullname)
+    })
+    res.json(username)
 })
 
 
