@@ -9,12 +9,12 @@ const siteRoute = require('./site.route')
 
 
 function route(app) {
-    app.use('album/', albumRoute)
-    app.use('artist/', artistRoute)
-    app.use('auth/', authRoute)
-    app.use('song/', songRoute)
-    app.use('user/', userRoute)
-    app.use('me/', meRoute)
+    app.use('/album', albumRoute)
+    app.use('/artist', artistRoute)
+    app.use('/auth', authRoute)
+    app.use('/song', songRoute)
+    app.use('/user', userRoute)
+    app.use('/me', meRoute)
     app.use('/', siteRoute)
 }
 
