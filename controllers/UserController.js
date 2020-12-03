@@ -38,7 +38,19 @@ class UserController {
     }
     
     async patchOne(req, res, next) {
-        const idParams = req.params.id
+        const { id, fullname, gender } = req.body
+
+        let user = await User.find({ id: id})
+
+        user.fullname = fullname
+        user.gender = gender
+
+        try {
+            await user.save()
+            res.status(200).json({success: true})
+        } catch (e) {
+            res.status(500).json({success: false})
+        }
     
         
     }
