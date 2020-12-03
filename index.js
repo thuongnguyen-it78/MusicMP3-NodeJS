@@ -14,8 +14,10 @@ const app = express()
 app.use(express.static('public'))
 app.use(morgan('combined'));
 
+// app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+
 
 db.connect();
 
