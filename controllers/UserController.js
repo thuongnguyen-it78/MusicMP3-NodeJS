@@ -1,20 +1,29 @@
-const { findByIdAndDelete } = require('../models/user.model')
 const User = require('../models/user.model')
 
 class UserController {
 
     // get all user
     async getAll(req, res, next) {
-        const users = await User.find({})
-        res.json({users})
+        try {
+            const users = await User.find({})
+            res.json({users})
+        } catch (e) {
+            res.status(500).json({success: false})
+        }  
     
     }
     
     // get user by id
     async getOne(req, res, next) {
         const idParams = req.params.id
-        const user = await User.find( {id: idParams} )
-        res.json({user})
+
+        try {
+            const user = await User.findById(idParams)
+            console.log(user.id)
+            res.json({user})
+        } catch (e) {
+            res.status(500).json({success: false})
+        }  
         
     }
     
@@ -39,9 +48,11 @@ class UserController {
     
     // update user
     async patchOne(req, res, next) {
-        const { id, fullname, gender } = req.body
+        const idParams = req.params.id
 
-        let user = await User.find({ id: id})
+        const { fullname, gender } = req.body
+
+        let user = await User.findById(idParams)
 
         user.fullname = fullname
         user.gender = gender
@@ -59,7 +70,6 @@ class UserController {
     // delete user by id
     async deleteOne(req, res, next) {
         const idParams = req.params.id
-        console.log(idParams);
 
         try {
             await User.findByIdAndDelete(idParams)
