@@ -2,6 +2,8 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 const { generateAccessToken } = require('../commons/common.js')
+const User = require('../models/user.model')
+
 
 
 
@@ -23,6 +25,18 @@ async function checkToken(req, res, next) {
         next()
       })
 }
+
+async function checkUser(req, res, next) {
+    try {
+        const user = User.findById(req.user_id)
+        req.user = user
+        next()
+    } catch {
+        res.json({error: 'Server error'})
+    }
+
+}
+
 
 
 
