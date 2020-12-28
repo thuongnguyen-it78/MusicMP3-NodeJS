@@ -30,10 +30,18 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: true
         },
+        listPlaylists: {
+            type: Array,
+            default: []
+        },
+        listFavoriteSongs: {
+            type: Array,
+            default: []
+        },
     },
     {
         timestamps: true,
     },
 )
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema, 'users')

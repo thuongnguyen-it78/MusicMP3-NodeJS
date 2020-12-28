@@ -4,9 +4,6 @@ const jwt = require('jsonwebtoken')
 const { generateAccessToken } = require('../commons/common.js')
 const User = require('../models/user.model')
 
-
-
-
 async function provideToken(req, res, next) {
     const user_id = req.user.id
     const token = generateAccessToken(user_id)
