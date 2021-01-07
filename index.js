@@ -8,6 +8,7 @@ const path = require('path')
 
 const route = require('./routes/index.route')
 const db = require('./config/db/index');
+const authMiddleware = require('./middlewares/auth.middlewares')
 
 const app = express()
 
@@ -20,6 +21,10 @@ app.use(express.json())
 
 
 db.connect();
+
+// validate token and verify user
+app.use(authMiddleware.validateToken, authMiddleware.verifyUser);
+
 
  
 

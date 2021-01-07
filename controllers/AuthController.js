@@ -47,7 +47,7 @@ class AuthController {
         user.gender = gender
 
         try {
-            user.save()
+            await user.save()
             next()
         } catch(e) {
             res.json({error: 'Lưu user vào db thất bại !'})
