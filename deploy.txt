@@ -1,0 +1,3 @@
+1. heroku log 
+2. npm start - npm start dev
+3. var env
