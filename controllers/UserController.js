@@ -35,7 +35,11 @@ class UserController {
         user.fullname = fullname
         user.email = email
         user.password = password
-        user.gender = gender
+        if(gender === 'true') {
+            user.gender = true 
+        } else {
+            user.gender = false 
+        }
 
         try {
             await user.save()
