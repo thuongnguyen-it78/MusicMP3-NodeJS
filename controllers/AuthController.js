@@ -10,15 +10,17 @@ class AuthController {
         const user = User.find({email})
 
          // 1. kiểm tra email có tồn tại không?
-        if (!user) return res.json({errros: 'Email không tồn tại'})
+        if (!user) return res.json({data: false})
 
         // 2. kiểm tra password có đúng không?
-        if (user.password !== password) res.json({errros: 'Password không chính xác'})
+        if (user.password !== password) res.json({data: false})
 
         // 3. cho nó đến middleware tiếp theo
+        req.userID = user._id
         next()
 
     }
+
 
     async signUp(req, res, next) {
 
@@ -48,9 +50,10 @@ class AuthController {
 
         try {
             await user.save()
+            req.userID = user._id
             next()
         } catch(e) {
-            res.json({error: 'Lưu user vào db thất bại !'})
+            res.json({error: 'Lưu user vào db thất bại !\n' + e})
         }
      
     }
