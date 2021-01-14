@@ -4,8 +4,6 @@ const methodOverride = require('method-override')
 const morgan = require('morgan')
 const path = require('path')
 
-
-
 const route = require('./routes/index.route')
 const db = require('./config/db/index');
 const authMiddleware = require('./middlewares/auth.middlewares')

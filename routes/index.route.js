@@ -6,8 +6,6 @@ const userRoute = require('./user.route')
 const meRoute = require('./me.route')
 const siteRoute = require('./site.route')
 
-
-
 function route(app) {
     app.use('/album', albumRoute)
     app.use('/artist', artistRoute)
