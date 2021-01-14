@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const siteController = require('../controllers/SiteController')
+const User = require('../models/user.model')
 
 
 router.get('/', async (req, res) => {
