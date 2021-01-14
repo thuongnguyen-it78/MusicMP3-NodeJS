@@ -6,9 +6,9 @@ class UserController {
     async getAll(req, res, next) {
         try {
             const users = await User.find({})
-            res.json({users})
+            res.json({data: users})
         } catch (e) {
-            res.status(500).json({success: false})
+            res.status(500).json({data : null})
         }  
     
     }
@@ -19,10 +19,9 @@ class UserController {
 
         try {
             const user = await User.findById(idParams)
-            console.log(user.id)
-            res.json({user})
+            res.json({data: user})
         } catch (e) {
-            res.status(500).json({success: false})
+            res.status(500).json({data : null})
         }  
         
     }
@@ -40,9 +39,9 @@ class UserController {
 
         try {
             await user.save()
-            res.status(200).json({success: true})
+            res.json({data : true})
         } catch (e) {
-            res.status(500).json({success: false})
+            res.status(500).json({data : false})
         }  
     }
     
@@ -59,9 +58,9 @@ class UserController {
 
         try {
             await user.save()
-            res.status(200).json({success: true})
+            res.status(200).json({data : true})
         } catch (e) {
-            res.status(500).json({success: false})
+            res.status(500).json({data : false})
         }
     
         
@@ -73,9 +72,9 @@ class UserController {
 
         try {
             await User.findByIdAndDelete(idParams)
-            res.status(200).json({success: true})
+            res.status(200).json({data : true})
         } catch (e) {
-            res.status(500).json({e:"abc"})
+            res.status(500).json({data : false})
         }
         
     }
