@@ -35,17 +35,13 @@ class UserController {
         user.fullname = fullname
         user.email = email
         user.password = password
-        if(gender === 'true') {
-            user.gender = true 
-        } else {
-            user.gender = false 
-        }
+        user.gender = true 
 
         try {
             await user.save()
             res.json({data : true})
         } catch (e) {
-            res.status(500).json({data : false})
+            res.status(500).json({data : false, body: req.body})
         }  
     }
     
