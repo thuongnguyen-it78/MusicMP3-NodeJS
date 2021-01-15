@@ -103,13 +103,37 @@
 ## Song
 1. Lấy ra toàn bộ bài hát
     - API: GET /song
+
 2. Lấy ra một bài hát theo id
     - API: GET /song/:id
+
 3. Thêm một bài hát
     - API: POST /song
+
 4. Chỉnh sửa một bài hát
     - API: UPDATE /song/:id
+
 5. Xóa một bài hát
     - API: DELETE /song/:id
+
+## User
+1. Quên mật khẩu
+    - API: POST /user/forgot
+
+2. Đổi mật khẩu
+    - API: POST /user/changepw
+
+3. Thay đổi thông tin cá nhân
+    - API: UPDATE /user/:id
+
+4. Lấy ra toàn bộ user
+    - API: GET /user
+
+5. Lấy một user theo id
+    - API: GET /user/:id
+
+6. Xóa một user
+    - API: DELETE /user/:id
+
 
 
