@@ -17,6 +17,14 @@ app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
+//Allow all requests from all domains & localhost
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET");
+    next();
+});
+
 
 db.connect();
 
@@ -30,7 +38,6 @@ app.use(async (req, res, next) => {
     try {
         const user = await User.findById('5ffbe15bf74bd3af9e4972b5')
         req.user = user
-        console.log(user);
         next()
     } catch (error) {
         res.json({data: 'Server is error'})

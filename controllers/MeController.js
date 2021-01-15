@@ -99,22 +99,130 @@ class MeController {
     async getPlaylistOne(req, res, next) {
         const playlistID = req.params.id
 
+        const user = req.user
+
+        let result = user.listPlaylists.find((playlist) => {
+            return playlist.id === playlistID
+        })
+
+        if(!result) result = {}
+
+        res.json({data: result})
+
 
     }
     async postPlaylistOne(req, res, next) {
+        const { playlistName } = req.body
+
+        const user = req.user
+
+        const newPlaylist = {
+            id: shortid.generate(),
+            title: playlistName,
+            listSongs: []
+
+        }
+
+        user.listPlaylists.push(newPlaylist)
+
+        user.save((err, result) => {
+            if(err) {
+                console.log(err);
+                res.json({data: false})
+            } else {
+                console.log(result)
+                res.json({data: true})
+            }
+        })
+
 
     }
     async patchPlaylistOne(req, res, next) {
+        const playlistID = req.params.id
+        const { newPlaylistName } = req.body
+        
+        // thằng này là đối tượng user, truyền từ middleware trước
+        const user = req.user
+
+        user.listPlaylists = user.listPlaylists.map((playlist) => {
+            if(playlist.id === playlistID) {
+                playlist.title = newPlaylistName
+            }
+            return playlist
+        })
+        user.markModified('listPlaylists')
+        user.save((err, result) => {
+            if(err) {
+                res.json({data: false})
+            } else {
+                console.log(result);
+                res.json({data: true})
+            }
+        })
 
     }
     async deletePlaylistOne(req, res, next) {
+        const playlistID = req.params.id
+
+        const user = req.user
+
+
+        user.listPlaylists = user.listPlaylists.filter((playlist) => {
+            return playlist.id !== playlistID   
+        })
+
+        user.save((err, result) => {
+            if(err) {
+                res.json({data: false})
+            } else {
+                console.log(result);
+                res.json({data: true})
+            }
+        })
+        
 
     }
     async postSongFromPlaylist(req, res, next) {
+        const playlistID = req.params.id
+        const { songID } = req.body
+
+        const user = req.user
+
+        user.listPlaylists = user.listPlaylists.map((playlist) => {
+            if(playlist.id === playlistID) playlist.listSongs.push(songID)
+            return playlist
+        })
+
+        user.save((err, result) => {
+            if(err) {
+                res.json({data: false})
+            } else {
+                res.json({data: true})
+            }
+        })
 
     }
     async deleteSongFromPlaylist(req, res, next) {
+        const playlistID = req.params.id
+        const { songID } = req.body
 
+        const user = req.user
+
+        user.listPlaylists = user.listPlaylists.map((playlist) => {
+            if(playlist.id === playlistID) {
+                const index = playlist.listSongs.indexOf(songID)
+                playlist.listSongs.splice(index, 1)
+            }
+            return playlist
+        })
+
+        user.save((err, result) => {
+            if(err) {
+                res.json({data: false})
+            } else {
+                res.json({data: true})
+            }
+        })
     }
 }
 

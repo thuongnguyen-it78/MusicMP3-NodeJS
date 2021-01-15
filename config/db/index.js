@@ -6,7 +6,7 @@ async function connect() {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
-        });
+        },  () => console.log( mongoose.connection.readyState ));
         console.log('Connect successfully!!!');
     } catch (error) {
         console.log(error);
