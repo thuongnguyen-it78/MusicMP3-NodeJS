@@ -98,7 +98,7 @@
 
 3. Xóa một bài hát khỏi danh sách yêu thích
     - API: PATCH /me/favorite
-    - Input: song id
+    - Input: {songID}
     - Output: true or false
 
 ## Song

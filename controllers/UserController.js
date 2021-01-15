@@ -35,7 +35,7 @@ class UserController {
         user.fullname = fullname
         user.email = email
         user.password = password
-        user.gender = gender 
+        user.gender = true 
 
         try {
             await user.save()
