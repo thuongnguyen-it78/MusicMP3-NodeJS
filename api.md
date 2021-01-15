@@ -90,9 +90,10 @@
 ## FavoriteSongs
 1. Lấy ra danh sách bài hát của user
     - API: GET /me/favorite
+
 2. Thêm một bài hát vào danh sách yêu thích
     - API: POST /me/favotite
-    - Input: song id
+    - Input: {songID}
     - Output: true or false
 
 3. Xóa một bài hát khỏi danh sách yêu thích
