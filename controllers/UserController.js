@@ -32,21 +32,31 @@ class UserController {
     }
 
     async changePass(req, res, next) {
+
         const { newPass, oldPass } = req.body
 
         const user = req.user
 
-        if(user.password !== oldPass) {
-            res.status(400).json({})
-            return;
+        if(newPass === oldPass) 
+            return res.status(400).json({})
+
+        if(user.password !== oldPass) 
+            return res.status(400).json({})
+        
+        user.password = newPass
+
+        try {
+            await user.save()
+            res.status(200).json({flag: true})
+        } catch (error) {
+            res.status(500).json({flag: false})
         }
-
-
+        
 
     }
 
     async verifyUser(req, res, next) {
-
+        
     }
 
     // get user by id

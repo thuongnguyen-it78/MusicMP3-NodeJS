@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 class Mail {
     sendMail(email, name, code) {
-        const html = `<h1 style = "color: #000; font-size: 25px">Chào ${name}! ❤</h1>
+        const html = `<h1 style = "color: #000; font-size: 25px">Chào ${name}!,</h1>
                     <div style = "height: 500px; font-size: 20px; color: #000" >
                         <span style = "color: #DC4134">Đây là mã xác nhận của cậu: </span> <b>${code}</b>
                     </div>`

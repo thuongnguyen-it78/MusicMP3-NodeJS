@@ -29,21 +29,21 @@ app.all('/*', function(req, res, next) {
 db.connect();
 
 // validate token and verify user
-// app.use(authMiddleware.validateToken, authMiddleware.verifyUser);
+app.use(authMiddleware.validateToken, authMiddleware.verifyUser);
 
 // fake data to test
 const User = require('./models/user.model')
 
-app.use(async (req, res, next) => {
-    try {
-        const user = await User.findById('5ffbe15bf74bd3af9e4972b5')
-        req.user = user
-        next()
-    } catch (error) {
-        res.json({data: 'Server is error'})
-    }
+// app.use(async (req, res, next) => {
+//     try {
+//         const user = await User.findById('5ffbe15bf74bd3af9e4972b5')
+//         req.user = user
+//         next()
+//     } catch (error) {
+//         res.json({data: 'Server is error'})
+//     }
 
-})
+// })
 
 route(app)
 
