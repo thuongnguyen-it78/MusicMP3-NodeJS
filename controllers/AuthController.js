@@ -43,6 +43,10 @@ class AuthController {
         if (!validateEmail(email)) errors.push('Email không hợp lệ')
         if (password.trim().length < 6) errors.push('Mật khẩu không hợp lệ')
         if (typeof gender !== 'boolean') errors.push('Giới tính không hợp lệ')
+      
+        // check email exists
+        const userExists = await User.findOne({email})
+        if(userExists) return res.status(403).json({flag: false})
 
         // trường hợp không hợp lệ
         if (errors.length !== 0) {

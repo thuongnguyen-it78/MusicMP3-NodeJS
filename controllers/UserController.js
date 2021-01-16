@@ -8,7 +8,7 @@ class UserController {
         const { email } = req.body
 
         // 1. check exists of user
-        const user = await User.find({email})
+        const user = await User.findOne({email})
         // 2. not exists
         if(!user) {
             res.status(401).json({flag: false})
@@ -28,7 +28,6 @@ class UserController {
         }
 
 
-        // 2. set pass
 
     }
 
