@@ -193,10 +193,12 @@ class MeController {
             return playlist
         })
 
+        user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
                 res.json({data: false})
             } else {
+                console.log(result.listPlaylists);
                 res.json({data: true})
             }
         })
@@ -216,10 +218,12 @@ class MeController {
             return playlist
         })
 
+        user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
                 res.json({data: false})
             } else {
+                console.log(result.listPlaylists);
                 res.json({data: true})
             }
         })

@@ -47,7 +47,7 @@ class SongController {
 
     async putOne (req, res, next) {
         const songID = req.params.id
-        const {title, genre, path, image, listArtists} = req.body
+        const { title, genre, path, image, listArtists } = req.body
         let song
         try {
             song = await Song.findById(songID)
