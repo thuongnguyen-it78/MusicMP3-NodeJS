@@ -1,6 +1,49 @@
 const User = require('../models/user.model')
+const Mail = require('../commons/Mail')
+const shortid = require('shortid')
 
 class UserController {
+
+    async forgotPass(req, res, next) {
+        const { email } = req.body
+
+        // 1. check exists of user
+        const user = User.find({email})
+        if(!user) res.json({data: false})
+
+        user.password = shortid.generate()
+
+
+        try {
+            Mail.sendMail(email, user.fullname, user.password)
+            await user.save()
+            res.json({data: true})
+             
+        } catch (error) {
+            res.json({data: false})
+        }
+
+
+        // 2. set pass
+
+    }
+
+    async changePass(req, res, next) {
+        const { newPass, oldPass } = req.body
+
+        const user = req.user
+
+        if(user.password !== oldPass) {
+            res.json({})
+        }
+
+
+
+    }
+
+    async verifyUser(req, res, next) {
+
+    }
 
     // get all user
     async getAll(req, res, next) {

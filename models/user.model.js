@@ -44,12 +44,6 @@ const userSchema = new mongoose.Schema(
     },
 )
 
-userSchema.pre('save', function(next) {
-
-    console.log(this.listPlaylists[0] + 'abc');
-    next()
-})
-
 module.exports = mongoose.model('User', userSchema, 'users')
 
 

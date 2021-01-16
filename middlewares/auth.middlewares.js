@@ -19,8 +19,11 @@ async function validateToken(req, res, next) {
     
     // kiểm tra nếu nó là login hoặc sign thì cho qua
     if(!req.originalUrl.indexOf('/auth/login') ||
-     !req.originalUrl.indexOf('/auth/signup')) 
-            next()
+     !req.originalUrl.indexOf('/auth/signup')) {
+        next()
+        return;
+     }
+            
     
     
     // lấy token từ headers
@@ -47,8 +50,10 @@ async function verifyUser(req, res, next) {
     
     // kiểm tra nếu nó là login hoặc sign thì cho qua
     if(!req.originalUrl.indexOf('/auth/login') ||
-     !req.originalUrl.indexOf('/auth/signup')) 
-            next()
+     !req.originalUrl.indexOf('/auth/signup')) {
+        next()
+        return;
+     }
     
     try {
         // từ thằng userID query ra thằng user

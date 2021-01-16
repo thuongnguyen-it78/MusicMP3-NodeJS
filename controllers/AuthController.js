@@ -5,15 +5,24 @@ class AuthController {
 
     async logIn(req, res, next) {
 
+        // get data from params
         const { email, password } = req.body
 
-        const user = User.find({email})
-
+        // get user by email
+        const user = await User.findOne({email: email})
+        
          // 1. kiểm tra email có tồn tại không?
-        if (!user) return res.json({data: false})
+        if (!user) {
+             res.json({data: false})
+             return
+        }
+
 
         // 2. kiểm tra password có đúng không?
-        if (user.password !== password) res.json({data: false})
+        if (user.password !== password) {
+            res.json({data: false})
+            return
+        }
 
         // 3. cho nó đến middleware tiếp theo
         req.userID = user._id
@@ -36,7 +45,10 @@ class AuthController {
         if (typeof gender !== 'boolean') errors.push('Giới tính không hợp lệ')
 
         // trường hợp không hợp lệ
-        if (errors.length !== 0) res.json({errors})
+        if (errors.length !== 0) {
+            res.json({errors})
+            return
+        }
 
         // trường hợp hợp lệ
         

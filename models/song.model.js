@@ -9,7 +9,7 @@ const songSchema = new mongoose.Schema(
         genre: {
             type: String,
             required: true
-        },
+    },
         path: {
             type: String,
             required: true
