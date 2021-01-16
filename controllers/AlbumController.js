@@ -5,7 +5,9 @@ class AlbumController {
     async getOne(req, res, next) {
         const { albumID } = req.body
         const id = req.params.id
-        const album = await Album.findById(albumID)
+
+        const params = albumID || req.params.id
+        const album = await Album.findById(params)
         const length = album.listSongs.length
         if(length === 0) return res.status(200).json({flag: true, data: []})
         let listSongs = []

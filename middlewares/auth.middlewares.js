@@ -21,13 +21,14 @@ async function validateToken(req, res, next) {
     if(!req.originalUrl.indexOf('/auth/login') ||
      !req.originalUrl.indexOf('/auth/signup')) {
         next()
-        return;
+        return
      }
             
     
     
     // lấy token từ headers
     const authHeader = req.headers['authorization']
+    console.log(authHeader);
     const token = authHeader && authHeader.split(' ')[1]
     
     // nếu không có token thì trả về lỗi
@@ -52,7 +53,7 @@ async function verifyUser(req, res, next) {
     if(!req.originalUrl.indexOf('/auth/login') ||
      !req.originalUrl.indexOf('/auth/signup')) {
         next()
-        return;
+        return
      }
     
     try {
