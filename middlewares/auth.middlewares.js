@@ -11,7 +11,7 @@ async function getToken(req, res, next) {
 
     // tạo một token với payload là userID
     const token = generateAccessToken(userID)
-    res.json({data: token})
+    res.json({data: {token: token}})
 }
 
 // check token valid
