@@ -28,7 +28,6 @@ async function validateToken(req, res, next) {
     
     // lấy token từ headers
     const authHeader = req.headers['authorization']
-    console.log(authHeader);
     const token = authHeader && authHeader.split(' ')[1]
     
     // nếu không có token thì trả về lỗi
@@ -58,7 +57,7 @@ async function verifyUser(req, res, next) {
     
     try {
         // từ thằng userID query ra thằng user
-        const user = User.findById(req.userID)
+        const user = await User.findById(req.userID)
 
         // truyền biến user tới request tiếp
         req.user = user

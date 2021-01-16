@@ -37,6 +37,9 @@ class AuthController {
 
         // khởi tạo một mảng error rỗng
         const errors = []
+
+        if(fullname || email || password || gender) 
+            return res.status(403).json({flag: false})
         
         // 1. kiểm tra tính hợp lệ của dữ liệu gửi lên
         if (fullname.trim().length === 0) errors.push('Tên không hợp lệ')

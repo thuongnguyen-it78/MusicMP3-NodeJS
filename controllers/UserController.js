@@ -38,15 +38,16 @@ class UserController {
         const user = req.user
 
         if(newPass === oldPass) 
-            return res.status(400).json({})
+            return res.status(400).json({flag: 'ds'})
 
         if(user.password !== oldPass) 
-            return res.status(400).json({})
+            return res.status(400).json({flag: 'd'})
+        console.log(user.password, oldPass)
         
         user.password = newPass
 
         try {
-            await user.save()
+            await user.save()   
             res.status(200).json({flag: true})
         } catch (error) {
             res.status(500).json({flag: false})
