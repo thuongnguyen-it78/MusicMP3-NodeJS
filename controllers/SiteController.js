@@ -11,20 +11,20 @@ class SiteController {
             // make for you
             const makeForYou = {
                 "title": "Make For You", 
-                "playlists": [list.slice(1 * index)]
+                "playlists": list.slice(1 * index)
             }
     
             // relax
             const justRelax = {
                 "title": "Just Relax", 
-                "playlists": [list.slice(2 * index)]
+                "playlists": list.slice(2 * index)
             }
     
     
             // top albums
             const topMusic = {
                 "title": "Top Music", 
-                "playlists": [list.slice(3 * index - 1)]
+                "playlists": list.slice(3 * index - 1)
             }  
     
             res.json({flag: true, data: [makeForYou, justRelax, topMusic]})
