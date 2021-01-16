@@ -45,6 +45,13 @@ class UserController {
 
     }
 
+    // get user by id
+    async getProfileById(req, res, next) {
+        const { userID }  = req.body
+        const user = await User.findById(userID)
+        res.json({data: user})
+    }
+
     // get all user
     async getAll(req, res, next) {
         try {

@@ -9,6 +9,8 @@ router.post('/forgot', userController.forgotPass)
 router.post('/change', userController.changePass)
 router.post('/verify', userController.verifyUser)
 
+router.get('/profile', userController.getProfileById)
+
 router.get('/', userController.getAll)
 router.get('/:id', userController.getOne)
 router.post('/', userController.postOne)
