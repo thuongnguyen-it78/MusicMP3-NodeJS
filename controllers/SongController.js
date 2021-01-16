@@ -5,9 +5,9 @@ class SongController {
         let songs = []
         try {
             songs = await Song.find({})
-            res.json({data: songs})
+            res.status(200).json({data: songs})
         } catch (error) {
-            res.json({data: null})
+            res.status(500).json({data: []})
         }
 
     }
@@ -17,9 +17,9 @@ class SongController {
         let song = {}
         try {
             song = await Song.findById(songID)
-            res.json({data: song})
+            res.status(200).json({data: song})
         } catch (error) {
-            res.json({data: null})
+            res.status(500).json({data: []})
         }
 
     }
@@ -37,9 +37,9 @@ class SongController {
 
             await song.save()
 
-            res.json({data : true})
+            res.status(200).json({flag : true})
         } catch (error) {
-            res.json({data : false})
+            res.status(500).json({flag : false})
 
         }
 
@@ -59,9 +59,9 @@ class SongController {
 
             await song.save()
 
-            res.json({data : true})
+            res.status(200).json({flag : true})
         } catch (error) {
-            res.json({data : false})
+            res.status(500).json({flag : false})
 
         }
 
@@ -73,9 +73,9 @@ class SongController {
 
         try {
             await Song.findByIdAndDelete(songID)
-            res.json({data: true})
+            res.status(200).json({flag: true})
         } catch (error) {
-            res.json({data: false})
+            res.status(500).json({flag: false})
         }
     }
 

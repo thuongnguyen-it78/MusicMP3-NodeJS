@@ -8,8 +8,12 @@ class UserController {
         const { email } = req.body
 
         // 1. check exists of user
-        const user = User.find({email})
-        if(!user) res.json({data: false})
+        const user = await User.find({email})
+        // 2. not exists
+        if(!user) {
+            res.status(401).json({flag: false})
+            return
+        }
 
         user.password = shortid.generate()
 
@@ -17,10 +21,10 @@ class UserController {
         try {
             Mail.sendMail(email, user.fullname, user.password)
             await user.save()
-            res.json({data: true})
+            res.status(200).json({flag: true})
              
         } catch (error) {
-            res.json({data: false})
+            res.status(500).json({flag: false})
         }
 
 
@@ -34,7 +38,8 @@ class UserController {
         const user = req.user
 
         if(user.password !== oldPass) {
-            res.json({})
+            res.status(400).json({})
+            return;
         }
 
 
@@ -48,17 +53,24 @@ class UserController {
     // get user by id
     async getProfileById(req, res, next) {
         const { userID }  = req.body
-        const user = await User.findById(userID)
-        res.json({data: user})
+        try {
+            const user = await User.findById(userID)
+            res.status(200).json({data: user})
+
+        } catch (error) {
+            res.status(500).json({data: []})
+
+        }
+
     }
 
     // get all user
     async getAll(req, res, next) {
         try {
             const users = await User.find({})
-            res.json({data: users})
+            res.status(200).json({data: users})
         } catch (e) {
-            res.status(500).json({data : null})
+            res.status(500).json({data : []})
         }  
     
     }
@@ -69,9 +81,9 @@ class UserController {
 
         try {
             const user = await User.findById(idParams)
-            res.json({data: user})
+            res.status(200).json({data: user})
         } catch (e) {
-            res.status(500).json({data : null})
+            res.status(500).json({data : []})
         }  
         
     }
@@ -89,9 +101,9 @@ class UserController {
 
         try {
             await user.save()
-            res.json({data : true})
+            res.status(200).json({flag : true})
         } catch (e) {
-            res.status(500).json({data : false, body: req.body})
+            res.status(500).json({flag : false})
         }  
     }
     
@@ -108,9 +120,9 @@ class UserController {
 
         try {
             await user.save()
-            res.status(200).json({data : true})
+            res.status(200).json({flag : true})
         } catch (e) {
-            res.status(500).json({data : false})
+            res.status(500).json({flag : false})
         }
     
         
@@ -122,9 +134,9 @@ class UserController {
 
         try {
             await User.findByIdAndDelete(idParams)
-            res.status(200).json({data : true})
+            res.status(200).json({flag : true})
         } catch (e) {
-            res.status(500).json({data : false})
+            res.status(500).json({flag : false})
         }
         
     }
