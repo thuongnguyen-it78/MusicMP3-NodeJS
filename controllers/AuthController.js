@@ -10,17 +10,17 @@ class AuthController {
 
         // get user by email
         const user = await User.findOne({email: email})
-        
+
          // 1. kiểm tra email có tồn tại không?
         if (!user) {
-             res.json({data: false})
+             res.status(403).json({flag: false})
              return
         }
 
 
         // 2. kiểm tra password có đúng không?
         if (user.password !== password) {
-            res.json({data: false})
+            res.status(403).json({flag: false})
             return
         }
 
@@ -46,7 +46,7 @@ class AuthController {
 
         // trường hợp không hợp lệ
         if (errors.length !== 0) {
-            res.json({errors})
+            res.status(403).json({flag: false})
             return
         }
 
@@ -65,11 +65,10 @@ class AuthController {
             req.userID = user._id
             next()
         } catch(e) {
-            res.json({error: 'Lưu user vào db thất bại !\n' + e})
+            res.status(500).json({flag: false})
         }
      
     }
-
 
 }
 

@@ -11,7 +11,7 @@ async function getToken(req, res, next) {
 
     // tạo một token với payload là userID
     const token = generateAccessToken(userID)
-    res.json({data: {id: userID, token: token}})
+    res.json({flag: true, data: {id: userID, token: token}})
 }
 
 // check token valid
@@ -31,13 +31,13 @@ async function validateToken(req, res, next) {
     const token = authHeader && authHeader.split(' ')[1]
     
     // nếu không có token thì trả về lỗi
-    if (token == null) return res.json({data: 'Token khong ton tai'})
+    if (token == null) return res.status(403).json({flag: false})
 
     // verify token
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
 
         // nếu token không hợp lệ thì trả về lỗi
-        if (err) return res.json({data: 'Token khong hop le'})
+        if (err) return res.status(403).json({flag: false})
 
         // truyền biến userID tới request tiếp theo
         req.userID = user.userID
@@ -63,7 +63,7 @@ async function verifyUser(req, res, next) {
         req.user = user
         next()
     } catch {
-        res.json({data: 'Ket noi server bi loi'})
+        res.json({flag: false})
     }
 
 }

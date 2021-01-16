@@ -3,10 +3,6 @@ const Album = require('../models/album.model')
 
 class SiteController {
     async home (req, res) {
-
-        let result = {}
-       
-        result.data = { data : [] }
     
         try {
             const list = await Album.find({});    
@@ -29,26 +25,22 @@ class SiteController {
             const topMusic = {
                 "title": "Top Music", 
                 "playlists": [list.slice(3 * index - 1)]
-            }
+            }  
     
-            result.data = [makeForYou, justRelax, topMusic]
-    
-    
-            res.json(result)
+            res.json({flag: true, data: [makeForYou, justRelax, topMusic]})
             
         } catch (error) {
-            res.json(result)
+            res.json({flag: false, data: []})
         }
     }
 
     async search (req, res) {
         const { q } = req.query
-        const result = {data : []}
         try {
-            result.data = await Song.find({"title": {$regex: q, $options:'i'}})
-            res.json(result)
+            const data = await Song.find({"title": {$regex: q, $options:'i'}})
+            res.json({flag: true, data})
         } catch (error) {
-            res.json(result)
+            res.json({flag: false, data: []})
         }
     
     }

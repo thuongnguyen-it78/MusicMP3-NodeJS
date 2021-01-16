@@ -5,9 +5,9 @@ class SongController {
         let songs = []
         try {
             songs = await Song.find({})
-            res.status(200).json({data: songs})
+            res.status(200).json({flag: true, data: songs})
         } catch (error) {
-            res.status(500).json({data: []})
+            res.status(500).json({flag: false, data: []})
         }
 
     }
@@ -17,9 +17,9 @@ class SongController {
         let song = {}
         try {
             song = await Song.findById(songID)
-            res.status(200).json({data: song})
+            res.status(200).json({flag: true, data: song})
         } catch (error) {
-            res.status(500).json({data: []})
+            res.status(500).json({flag: false, data: []})
         }
 
     }
@@ -29,6 +29,7 @@ class SongController {
         let song
         try {
             song = new Song()
+
             song.title = title
             song.genre = genre
             song.path = path
@@ -37,9 +38,9 @@ class SongController {
 
             await song.save()
 
-            res.status(200).json({flag : true})
+            res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag : false})
+            res.status(500).json({flag: false})
 
         }
 
@@ -59,9 +60,9 @@ class SongController {
 
             await song.save()
 
-            res.status(200).json({flag : true})
+            res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag : false})
+            res.status(500).json({flag: false})
 
         }
 

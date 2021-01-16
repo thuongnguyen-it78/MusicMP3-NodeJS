@@ -8,20 +8,19 @@ class MeController {
     // shirt + alt + up/down
 
     async getFavoriteAll(req, res, next) {
-        // 0. declare something
-        let result = {data: []}
+
         // 1. get user from middleware before
         const user =  req.user
         // 2. get all list songs from listFavoriteSongs and return
 
         try {
-            const listFavoriteSongs = await Song.find({_id: { $in : user.listFavoriteSongs} } )
-            result.data = listFavoriteSongs
-            res.json(result)
+            const listFavoriteSongs = await Song.find({_id: { $in : user.listFavoriteSongs}})
+            
+            res.status(200).json({flag: true, data: listFavoriteSongs})
 
         } catch (error) {
-            res.json(result)    
-           
+            res.status(500).json({flag: false, data: []})
+
         }
 
     }
@@ -30,8 +29,8 @@ class MeController {
         const { songID } = req.body
 
         if(typeof songID !== 'string') {
-            res.json({data: false})
-            return;
+            res.status(401).json({flag: false})
+            return
         } 
 
         const user =  req.user
@@ -40,9 +39,9 @@ class MeController {
 
         try {
             await user.save()
-            res.json({data: true})
+            res.status(200).json({flag: true})
         } catch (error) {
-            res.json({data: false})
+            res.status(500).json({flag: false})
         }
         
 
@@ -59,26 +58,25 @@ class MeController {
 
         try {
             await user.save()
-            res.json({data: true})
+            res.status(200).json({flag: false})
         } catch (error) {
-            res.json({data: false})
+            res.status(500).json({flag: true})
         }
 
     }
 
 
     async getPlaylistAll(req, res, next) {
-        // 0. declare something
-        let result = {data: []}
+
         // 1. get user from middleware before
         const user =  req.user
 
         const length = user.listPlaylists.length
 
         if(length === 0) {
-            res.json(result)
+            res.status(200).json({flag: true, data: []})
         }
-
+        const data = []
         let title = ''
         let listSongs = []
         let id
@@ -87,12 +85,12 @@ class MeController {
                 id = user.listPlaylists[i].id
                 title = user.listPlaylists[i].title
                 listSongs = await Song.find({_id: { $in : user.listPlaylists[i].listSongs} })
-                result.data.push({id, title, listSongs})
+                data.push({id, title, listSongs})
             }
-            res.json(result)
+            res.status(200).json({flag: true, data})
         
         } catch (error) {
-            res.json(result)
+            res.status(500).json({flag: false, data: []})
         }
        
     }
@@ -105,9 +103,7 @@ class MeController {
             return playlist.id === playlistID
         })
 
-        if(!result) result = {}
-
-        res.json({data: result})
+        res.status(200).json({flag: true, data: [result]})
 
 
     }
@@ -128,10 +124,10 @@ class MeController {
         user.save((err, result) => {
             if(err) {
                 console.log(err);
-                res.json({data: false})
+                res.status(200).json({flag: true})
             } else {
                 console.log(result)
-                res.json({data: true})
+                res.status(500).json({flag: false})
             }
         })
 
@@ -150,13 +146,14 @@ class MeController {
             }
             return playlist
         })
+
         user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
-                res.json({data: false})
+                res.status(200).json({flag: true})
             } else {
                 console.log(result);
-                res.json({data: true})
+                res.status(500).json({flag: false})
             }
         })
 
@@ -173,10 +170,10 @@ class MeController {
 
         user.save((err, result) => {
             if(err) {
-                res.json({data: false})
+                res.status(200).json({flag: false})
             } else {
                 console.log(result);
-                res.json({data: true})
+                res.status(500).json({flag: true})
             }
         })
         
@@ -196,10 +193,10 @@ class MeController {
         user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
-                res.json({data: false})
+                res.status(200).json({flag: false})
             } else {
                 console.log(result.listPlaylists);
-                res.json({data: true})
+                res.status(500).json({flag: true})
             }
         })
 
@@ -221,10 +218,10 @@ class MeController {
         user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
-                res.json({data: false})
+                res.status(200).json({flag: false})
             } else {
                 console.log(result.listPlaylists);
-                res.json({data: true})
+                res.status(500).json({flag: true})
             }
         })
     }

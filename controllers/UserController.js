@@ -55,10 +55,10 @@ class UserController {
         const { userID }  = req.body
         try {
             const user = await User.findById(userID)
-            res.status(200).json({data: user})
+            res.status(200).json({flag: true, data: user})
 
         } catch (error) {
-            res.status(500).json({data: []})
+            res.status(500).json({flag: false, data: []})
 
         }
 
@@ -68,9 +68,9 @@ class UserController {
     async getAll(req, res, next) {
         try {
             const users = await User.find({})
-            res.status(200).json({data: users})
+            res.status(200).json({flag: true, data: users})
         } catch (e) {
-            res.status(500).json({data : []})
+            res.status(500).json({flag: false, data : []})
         }  
     
     }
@@ -81,9 +81,9 @@ class UserController {
 
         try {
             const user = await User.findById(idParams)
-            res.status(200).json({data: user})
+            res.status(200).json({flag: true, data: user})
         } catch (e) {
-            res.status(500).json({data : []})
+            res.status(500).json({flag: false, data : []})
         }  
         
     }
