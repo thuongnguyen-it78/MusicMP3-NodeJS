@@ -58,9 +58,9 @@ class MeController {
 
         try {
             await user.save()
-            res.status(200).json({flag: false})
+            res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag: true})
+            res.status(500).json({flag: false})
         }
 
     }
@@ -110,6 +110,8 @@ class MeController {
     async postPlaylistOne(req, res, next) {
         const { playlistName } = req.body
 
+        if(!playlistName) return res.status(400).json({flag: false})
+
         const user = req.user
 
         const newPlaylist = {
@@ -124,10 +126,10 @@ class MeController {
         user.save((err, result) => {
             if(err) {
                 console.log(err);
-                res.status(200).json({flag: true})
+                res.status(200).json({flag: false})
             } else {
                 console.log(result)
-                res.status(500).json({flag: false})
+                res.status(500).json({flag: true})
             }
         })
 
@@ -150,10 +152,10 @@ class MeController {
         user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
-                res.status(200).json({flag: true})
+                res.status(200).json({flag: false})
             } else {
                 console.log(result);
-                res.status(500).json({flag: false})
+                res.status(500).json({flag: true})
             }
         })
 
