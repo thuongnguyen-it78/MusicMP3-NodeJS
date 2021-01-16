@@ -5,8 +5,8 @@ const router = express.Router();
 const userController = require('../controllers/UserController');
 const { route } = require('./site.route');
 
-route.post('/forgot', userController.forgotPass)
-route.post('/change', userController.changePass)
+router.post('/forgot', userController.forgotPass)
+router.post('/change', userController.changePass)
 
 
 router.get('/', userController.getAll)
