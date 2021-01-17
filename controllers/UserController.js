@@ -2,6 +2,8 @@ const User = require('../models/user.model')
 const Mail = require('../commons/Mail')
 const shortid = require('shortid')
 
+const { generatePass } = require('../commons/common')
+
 class UserController {
 
     async forgotPass(req, res, next) {
@@ -15,11 +17,13 @@ class UserController {
             return
         }
 
-        user.password = shortid.generate()
+        const shortPass = shortid.generate()
+
+        user.password = generatePass(shortPass)
 
 
         try {
-            Mail.sendMail(email, user.fullname, user.password)
+            Mail.sendMail(email, user.fullname, shortPass)
             await user.save()
             res.status(200).json({flag: true})
              
@@ -40,10 +44,10 @@ class UserController {
         if(newPass === oldPass) 
             return res.status(400).json({flag: false, status: "newPass is not equal oldPass"})
 
-        if(user.password !== oldPass) 
+        if(user.password !== generatePass(oldPass)) 
             return res.status(400).json({flag: false, status: "oldPass is not equal present pass"})
         
-        user.password = newPass
+        user.password = generatePass(newPass)
 
         try {
             await user.save()   
@@ -109,8 +113,8 @@ class UserController {
 
         user.fullname = fullname
         user.email = email
-        user.password = password
-        user.gender = gender 
+        user.password = generatePass(password) 
+        user.gender = gender
 
         try {
             await user.save()

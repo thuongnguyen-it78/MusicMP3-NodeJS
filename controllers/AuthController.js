@@ -1,5 +1,5 @@
 const User = require('../models/user.model')
-const { validateEmail } = require('../commons/common.js')
+const { validateEmail, generatePass } = require('../commons/common.js')
 
 class AuthController {
 
@@ -17,7 +17,7 @@ class AuthController {
         }
 
 
-        if (user.password !== password) {
+        if (user.password !== generatePass(password) ) {
             res.status(403).json({flag: false, status: "Wrong password"})
             return
         }
@@ -61,7 +61,7 @@ class AuthController {
 
         user.fullname = fullname
         user.email = email
-        user.password = password
+        user.password = generatePass(password) 
         user.gender = gender
 
         try {

@@ -1,5 +1,10 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
+const md5 = require('md5')
+
+function generatePass(code) {
+    return md5(code)
+}
 
 function generateAccessToken(userID) {
     return jwt.sign({userID}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2000000s' })
@@ -12,5 +17,6 @@ function validateEmail(email) {
 
 module.exports = {
     generateAccessToken,
-    validateEmail
+    validateEmail,
+    generatePass
 }
