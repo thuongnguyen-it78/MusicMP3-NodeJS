@@ -3,6 +3,7 @@ const express = require('express')
 const methodOverride = require('method-override')
 const morgan = require('morgan')
 const path = require('path')
+const cors = require('cors')
 
 const route = require('./routes/index.route')
 const db = require('./config/db/index');
@@ -26,7 +27,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
 
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -34,6 +35,8 @@ app.use(function(req, res, next) {
     
     next();
 });
+
+app.use(cors())
 
 
 db.connect();
