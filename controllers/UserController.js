@@ -102,12 +102,16 @@ class UserController {
     async postOne(req, res, next) {
         const { fullname, email, password, gender } = req.body
 
+        const userExists = await User.findOne({email: email})
+
+        if(userExists) return res.status(403).json({flag : false})
+
         let user = new User()
 
         user.fullname = fullname
         user.email = email
         user.password = password
-        user.gender = true 
+        user.gender = gender 
 
         try {
             await user.save()
