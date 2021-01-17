@@ -62,7 +62,7 @@ class UserController {
 
     // get user by id
     async getProfileById(req, res, next) {
-        const { userID }  = req.body
+        const { userID }  = req.query
         try {
             const user = await User.findById(userID)
             res.status(200).json({flag: true, data: user})
