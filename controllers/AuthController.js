@@ -35,7 +35,7 @@ class AuthController {
         // declare to contain errors
         let errors = []
 
-        if(fullname && email && password && gender !== 'undefined') 
+        if(!(fullname && email && password && gender !== 'undefined')) 
             return res.status(403).json({flag: false, status: "All field isn't allow empty"})
         
         // 1. kiểm tra tính hợp lệ của dữ liệu gửi lên
