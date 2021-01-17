@@ -7,7 +7,7 @@ class SongController {
             songs = await Song.find({})
             res.status(200).json({flag: true, data: songs})
         } catch (error) {
-            res.status(500).json({flag: false, data: []})
+            res.status(500).json({flag: false, data: [], status: "Server error"})
         }
 
     }
@@ -19,7 +19,7 @@ class SongController {
             song = await Song.findById(songID)
             res.status(200).json({flag: true, data: song})
         } catch (error) {
-            res.status(500).json({flag: false, data: []})
+            res.status(500).json({flag: false, data: [], status: "Server error"})
         }
 
     }
@@ -40,7 +40,7 @@ class SongController {
 
             res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
 
         }
 
@@ -62,7 +62,7 @@ class SongController {
 
             res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
 
         }
 
@@ -76,7 +76,7 @@ class SongController {
             await Song.findByIdAndDelete(songID)
             res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
         }
     }
 

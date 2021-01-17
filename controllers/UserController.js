@@ -11,7 +11,7 @@ class UserController {
         const user = await User.findOne({email})
         // 2. not exists
         if(!user) {
-            res.status(401).json({flag: false})
+            res.status(401).json({flag: false, status: "Wrong email"})
             return
         }
 
@@ -24,7 +24,7 @@ class UserController {
             res.status(200).json({flag: true})
              
         } catch (error) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
         }
 
 
@@ -38,11 +38,10 @@ class UserController {
         const user = req.user
 
         if(newPass === oldPass) 
-            return res.status(400).json({flag: 'ds'})
+            return res.status(400).json({flag: false, status: "newPass is not equal oldPass"})
 
         if(user.password !== oldPass) 
-            return res.status(400).json({flag: 'd'})
-        console.log(user.password, oldPass)
+            return res.status(400).json({flag: false, status: "oldPass is not equal present pass"})
         
         user.password = newPass
 
@@ -50,7 +49,7 @@ class UserController {
             await user.save()   
             res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
         }
         
 
@@ -68,7 +67,7 @@ class UserController {
             res.status(200).json({flag: true, data: user})
 
         } catch (error) {
-            res.status(500).json({flag: false, data: []})
+            res.status(500).json({flag: false, data: [], status: "Server error"})
 
         }
 
@@ -80,7 +79,7 @@ class UserController {
             const users = await User.find({})
             res.status(200).json({flag: true, data: users})
         } catch (e) {
-            res.status(500).json({flag: false, data : []})
+            res.status(500).json({flag: false, data : [], status: "Server error"})
         }  
     
     }
@@ -104,7 +103,7 @@ class UserController {
 
         const userExists = await User.findOne({email: email})
 
-        if(userExists) return res.status(403).json({flag : false})
+        if(userExists) return res.status(403).json({flag : false, status: "email already exists"})
 
         let user = new User()
 
@@ -117,7 +116,7 @@ class UserController {
             await user.save()
             res.status(200).json({flag : true})
         } catch (e) {
-            res.status(500).json({flag : false})
+            res.status(500).json({flag : false, status: "Server error"})
         }  
     }
     
@@ -136,7 +135,7 @@ class UserController {
             await user.save()
             res.status(200).json({flag : true})
         } catch (e) {
-            res.status(500).json({flag : false})
+            res.status(500).json({flag : false, status: "Server error"})
         }
     
         
@@ -150,7 +149,7 @@ class UserController {
             await User.findByIdAndDelete(idParams)
             res.status(200).json({flag : true})
         } catch (e) {
-            res.status(500).json({flag : false})
+            res.status(500).json({flag : false, status: "Server error"})
         }
         
     }

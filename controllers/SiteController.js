@@ -40,7 +40,7 @@ class SiteController {
             const data = await Song.find({"title": {$regex: q, $options:'i'}})
             res.json({flag: true, data})
         } catch (error) {
-            res.json({flag: false, data: []})
+            res.json({flag: false, data: [], status: "Server error"})
         }
     
     }

@@ -31,13 +31,13 @@ async function validateToken(req, res, next) {
     const token = authHeader && authHeader.split(' ')[1]
     
     // nếu không có token thì trả về lỗi
-    if (token == null) return res.status(403).json({flag: false})
+    if (token == null) return res.status(403).json({flag: false, status: "Token is empty"})
 
     // verify token
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
 
         // nếu token không hợp lệ thì trả về lỗi
-        if (err) return res.status(403).json({flag: false})
+        if (err) return res.status(403).json({flag: false, status: "Token Valid"})
 
         // truyền biến userID tới request tiếp theo
         req.userID = user.userID
@@ -63,7 +63,7 @@ async function verifyUser(req, res, next) {
         req.user = user
         next()
     } catch {
-        res.json({flag: false})
+        res.json({flag: false, status: "Server error"})
     }
 
 }

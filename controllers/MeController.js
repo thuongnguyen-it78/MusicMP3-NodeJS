@@ -9,9 +9,7 @@ class MeController {
 
     async getFavoriteAll(req, res, next) {
 
-        // 1. get user from middleware before
         const user =  req.user
-        // 2. get all list songs from listFavoriteSongs and return
 
         try {
             const listFavoriteSongs = await Song.find({_id: { $in : user.listFavoriteSongs}})
@@ -19,7 +17,7 @@ class MeController {
             res.status(200).json({flag: true, data: listFavoriteSongs})
 
         } catch (error) {
-            res.status(500).json({flag: false, data: []})
+            res.status(500).json({flag: false, data: [], status: "Server error"})
 
         }
 
@@ -29,7 +27,7 @@ class MeController {
         const { songID } = req.body
 
         if(typeof songID !== 'string') {
-            res.status(401).json({flag: false})
+            res.status(401).json({flag: false, status: "songID is string"})
             return
         } 
 
@@ -41,7 +39,7 @@ class MeController {
             await user.save()
             res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
         }
         
 
@@ -60,7 +58,7 @@ class MeController {
             await user.save()
             res.status(200).json({flag: true})
         } catch (error) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
         }
 
     }
@@ -74,7 +72,7 @@ class MeController {
         const length = user.listPlaylists.length
 
         if(length === 0) {
-            res.status(200).json({flag: true, data: []})
+            res.status(200).json({flag: true, data: [], status: "Playlist or user is empty"})
         }
         const data = []
         let title = ''
@@ -90,7 +88,7 @@ class MeController {
             res.status(200).json({flag: true, data})
         
         } catch (error) {
-            res.status(500).json({flag: false, data: []})
+            res.status(500).json({flag: false, data: [], status: "Server error"})
         }
        
     }
@@ -105,12 +103,11 @@ class MeController {
 
         res.status(200).json({flag: true, data: [result]})
 
-
     }
     async postPlaylistOne(req, res, next) {
         const { playlistName } = req.body
 
-        if(!playlistName) return res.status(400).json({flag: false})
+        if(!playlistName) return res.status(400).json({flag: false, status: "Must have playlistName"})
 
         const user = req.user
 
@@ -126,7 +123,7 @@ class MeController {
         user.save((err, result) => {
             if(err) {
                 console.log(err);
-                res.status(200).json({flag: false})
+                res.status(200).json({flag: false, status: "Server error"})
             } else {
                 console.log(result)
                 res.status(500).json({flag: true})
@@ -152,7 +149,7 @@ class MeController {
         user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
-                res.status(200).json({flag: false})
+                res.status(200).json({flag: false, status: "Server error"})
             } else {
                 console.log(result);
                 res.status(500).json({flag: true})
@@ -172,7 +169,7 @@ class MeController {
 
         user.save((err, result) => {
             if(err) {
-                res.status(200).json({flag: false})
+                res.status(200).json({flag: false, status: "Server error"})
             } else {
                 console.log(result);
                 res.status(500).json({flag: true})
@@ -195,7 +192,7 @@ class MeController {
         user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
-                res.status(200).json({flag: false})
+                res.status(200).json({flag: false, status: "Server error"})
             } else {
                 console.log(result.listPlaylists);
                 res.status(500).json({flag: true})
@@ -220,7 +217,7 @@ class MeController {
         user.markModified('listPlaylists')
         user.save((err, result) => {
             if(err) {
-                res.status(200).json({flag: false})
+                res.status(200).json({flag: false, status: "Server error"})
             } else {
                 console.log(result.listPlaylists);
                 res.status(500).json({flag: true})

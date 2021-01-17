@@ -11,20 +11,17 @@ class AuthController {
         // get user by email
         const user = await User.findOne({email: email})
 
-         // 1. kiểm tra email có tồn tại không?
         if (!user) {
-             res.status(403).json({flag: false})
+             res.status(403).json({flag: false, status: "Email doesn't exists"})
              return
         }
 
 
-        // 2. kiểm tra password có đúng không?
         if (user.password !== password) {
-            res.status(403).json({flag: false})
+            res.status(403).json({flag: false, status: "Wrong password"})
             return
         }
-
-        // 3. cho nó đến middleware tiếp theo
+        // next middleware
         req.userID = user._id
         next()
 
@@ -35,11 +32,11 @@ class AuthController {
 
         const { fullname, email, password, gender } = req.body
 
-        // khởi tạo một mảng error rỗng
-        const errors = []
+        // declare to contain errors
+        let errors = []
 
         if(fullname || email || password || gender) 
-            return res.status(403).json({flag: false})
+            return res.status(403).json({flag: false, status: "All field isn't allow empty"})
         
         // 1. kiểm tra tính hợp lệ của dữ liệu gửi lên
         if (fullname.trim().length === 0) errors.push('Tên không hợp lệ')
@@ -49,11 +46,11 @@ class AuthController {
       
         // check email exists
         const userExists = await User.findOne({email})
-        if(userExists) return res.status(403).json({flag: false})
+        if(userExists) return res.status(403).json({flag: false, status: "Email already exists in system"})
 
         // trường hợp không hợp lệ
         if (errors.length !== 0) {
-            res.status(403).json({flag: false})
+            res.status(403).json({flag: false, status: "Field error"})
             return
         }
 
@@ -72,7 +69,7 @@ class AuthController {
             req.userID = user._id
             next()
         } catch(e) {
-            res.status(500).json({flag: false})
+            res.status(500).json({flag: false, status: "Server error"})
         }
      
     }

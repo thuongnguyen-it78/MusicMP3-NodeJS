@@ -2,6 +2,7 @@ const Album = require('../models/album.model')
 const Song = require('../models/song.model')
 
 class AlbumController {
+    
     async getOne(req, res, next) {
         const id = req.params.id
         const { albumID } = req.query
@@ -9,7 +10,7 @@ class AlbumController {
         const params = albumID || req.params.id
         const album = await Album.findById(params)
         const length = album.listSongs.length
-        if(length === 0) return res.status(200).json({flag: true, data: []})
+        if(length === 0) return res.status(200).json({flag: true, data: [], status: 'Album of user is empty'})
         let listSongs = []
 
         try {
@@ -19,7 +20,7 @@ class AlbumController {
             res.status(200).json({flag: true, data: listSongs})
         
         } catch (error) {
-            res.status(500).json({flag: false, data: []})
+            res.status(500).json({flag: false, data: [], status: 'Server error'})
         }
 
     }
