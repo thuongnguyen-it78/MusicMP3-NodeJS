@@ -1,3 +1,5 @@
+const ObjectId = require('mongoose').Types.ObjectId;
+
 const User = require('../models/user.model')
 const Song = require('../models/song.model')
 const shortid = require('shortid')
@@ -13,7 +15,6 @@ class MeController {
 
         try {
             const listFavoriteSongs = await Song.find({_id: { $in : user.listFavoriteSongs}})
-            
             res.status(200).json({flag: true, data: listFavoriteSongs})
 
         } catch (error) {
@@ -72,22 +73,25 @@ class MeController {
         const length = user.listPlaylists.length
 
         if(length === 0) {
-            res.status(200).json({flag: true, data: [], status: "Playlist or user is empty"})
+            return res.status(200).json({flag: true, data: [], status: "Playlist or user is empty"})
         }
         const data = []
         let title = ''
         let listSongs = []
         let id
         try {
+            console.log(length, user);
             for(let i = 0; i < length; i++) {
                 id = user.listPlaylists[i].id
                 title = user.listPlaylists[i].title
                 listSongs = await Song.find({_id: { $in : user.listPlaylists[i].listSongs} })
+                console.log(listSongs);
                 data.push({id, title, listSongs})
             }
             res.status(200).json({flag: true, data})
         
         } catch (error) {
+            console.log(error);
             res.status(500).json({flag: false, data: [], status: "Server error"})
         }
        
@@ -136,6 +140,10 @@ class MeController {
         const playlistID = req.params.id
         const { newPlaylistName } = req.body
         
+        if(newPlaylistName.length > 30) {
+            return res.status(200).json({flag: false, status: "Playlist is less than 30 characters"})
+        }
+
         // thằng này là đối tượng user, truyền từ middleware trước
         const user = req.user
 
@@ -182,6 +190,9 @@ class MeController {
         const playlistID = req.params.id
         const { songID } = req.body
 
+        if(!ObjectId.isValid(songID))
+            return res.status(200).json({flag: false, status: "SongID valid"})
+
         const user = req.user
 
         user.listPlaylists = user.listPlaylists.map((playlist) => {
@@ -203,6 +214,9 @@ class MeController {
     async deleteSongFromPlaylist(req, res, next) {
         const playlistID = req.params.id
         const { songID } = req.body
+
+        if(!ObjectId.isValid(songID))
+            return res.status(200).json({flag: false, status: "SongID valid"})
 
         const user = req.user
 

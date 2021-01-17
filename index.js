@@ -7,7 +7,7 @@ const cors = require('cors')
 
 const route = require('./routes/index.route')
 const db = require('./config/db/index');
-const authMiddleware = require('./middlewares/auth.middlewares')
+const authMiddleware = require('./middlewares/authen.middleware')
 
 const app = express()
 
