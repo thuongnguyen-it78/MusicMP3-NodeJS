@@ -3,8 +3,8 @@ const Song = require('../models/song.model')
 
 class AlbumController {
     async getOne(req, res, next) {
-        const { albumID } = req.body
         const id = req.params.id
+        const { albumID } = req.query
 
         const params = albumID || req.params.id
         const album = await Album.findById(params)
