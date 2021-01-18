@@ -8,6 +8,8 @@ router.get('/favorite', meController.getFavoriteAll)
 router.post('/favorite', meController.postFavoriteOne)
 router.patch('/favorite', meController.patchFavoriteOne)
 
+router.get('/favorite/check', meController.getCheckSongInFavor)
+
 router.get('/playlist', meController.getPlaylistAll)
 router.get('/playlist/:id', meController.getPlaylistOne)
 router.post('/playlist', meController.postPlaylistOne)

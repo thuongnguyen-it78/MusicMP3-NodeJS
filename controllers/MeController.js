@@ -24,6 +24,26 @@ class MeController {
 
     }
 
+    async getCheckSongInFavor(req, res, next) {
+
+        const { songID } = req.query
+
+        const user =  req.user
+
+        try {
+            if(user.listFavoriteSongs.indexOf(songID) !== -1)
+            return res.status(200).json({flag: true})
+
+            res.status(200).json({flag: false, status: "Not in list favorite songs"})
+
+
+        } catch (error) {
+            res.status(500).json({flag: false, status: "Server error"})
+
+        }
+
+    }
+
     async postFavoriteOne(req, res, next) {
         const { songID } = req.body
 
