@@ -134,7 +134,9 @@ class UserController {
 
         user.fullname = fullname
         user.gender = gender
-        user.role = role
+
+        if(user.role === 2)
+            user.role = role || 1
 
         try {
             await user.save()
