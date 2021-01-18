@@ -19,7 +19,8 @@ async function validateToken(req, res, next) {
     
     // kiểm tra nếu nó là login hoặc sign thì cho qua
     if(!req.originalUrl.indexOf('/auth/login') ||
-     !req.originalUrl.indexOf('/auth/signup')) {
+     !req.originalUrl.indexOf('/auth/signup') ||
+     !req.originalUrl.indexOf('/user/forgot')) {
         next()
         return
      }
@@ -50,7 +51,8 @@ async function verifyUser(req, res, next) {
     
     // kiểm tra nếu nó là login hoặc sign thì cho qua
     if(!req.originalUrl.indexOf('/auth/login') ||
-     !req.originalUrl.indexOf('/auth/signup')) {
+     !req.originalUrl.indexOf('/auth/signup') ||
+     !req.originalUrl.indexOf('/user/forgot')) {
         next()
         return
      }
