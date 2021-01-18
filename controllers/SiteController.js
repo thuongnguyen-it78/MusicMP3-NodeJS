@@ -1,7 +1,34 @@
 const Song = require('../models/song.model')
 const Album = require('../models/album.model')
+const User = require('../models/user.model')
 
 class SiteController {
+    async getOverview(req, res) {
+        // return all amount user, song, album
+
+        try {
+        // total user
+        const user = await User.count({})
+        
+        // total song
+        const song = await Song.count({})
+
+        // total album
+        const album = await Album.count({})  
+
+        res.status(200).json({flag: true, data: {user, song, album}})
+        
+        } catch (error) {
+
+        res.status(500).json({flag: false, status: 'Server Error'})
+
+        }
+
+
+        
+
+    }
+
     async home (req, res) {
     
         try {

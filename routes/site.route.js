@@ -7,5 +7,7 @@ router.get('/', siteController.home)
 
 router.get('/search', siteController.search) 
 
+router.get('/view', siteController.getOverview)
+
 
 module.exports = router;

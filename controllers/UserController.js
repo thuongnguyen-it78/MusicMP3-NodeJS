@@ -128,12 +128,13 @@ class UserController {
     async patchOne(req, res, next) {
         const idParams = req.params.id
 
-        const { fullname, gender } = req.body
+        const { fullname, gender, role } = req.body
 
         let user = await User.findById(idParams)
 
         user.fullname = fullname
         user.gender = gender
+        user.role = role
 
         try {
             await user.save()
