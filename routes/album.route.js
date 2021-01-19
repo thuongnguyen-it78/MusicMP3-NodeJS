@@ -3,6 +3,7 @@ const router = express.Router();
 const albumController = require('../controllers/AlbumController')
 
 router.get('/:id', albumController.getOne)
+router.get('/', albumController.getAll)
 
 
 

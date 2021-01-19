@@ -24,6 +24,18 @@ class AlbumController {
         }
 
     }
+
+    async getAll(req, res, next) {
+        try {
+            const album = await Album.find({})
+            
+            res.status(200).json({flag: true, data: album})
+        
+        } catch (error) {
+            res.status(500).json({flag: false, data: [], status: 'Server error'})
+        }
+
+    }
 }
 
 module.exports = new AlbumController()
