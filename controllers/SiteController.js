@@ -33,28 +33,34 @@ class SiteController {
     
         try {
             const list = await Album.find({});    
-            const index = list.length / 3
+            const index = list.length / 4
     
             // make for you
             const makeForYou = {
                 "title": "Make For You", 
-                "playlists": list.slice(1 * index)
+                "playlists": list.slice(0, 1 * index)
             }
     
             // relax
             const justRelax = {
                 "title": "Just Relax", 
-                "playlists": list.slice(2 * index)
+                "playlists": list.slice(1 * index, 2 * index)
             }
     
     
             // top albums
             const topMusic = {
                 "title": "Top Music", 
-                "playlists": list.slice(3 * index - 1)
+                "playlists": list.slice(2 * index, 3 * index)
             }  
+
+            const readBook = {
+                "title:": "Read Book",
+                "playlists": list.slice(3 * index, 4 * index - 1)
+
+            }
     
-            res.json({flag: true, data: [makeForYou, justRelax, topMusic]})
+            res.json({flag: true, data: [makeForYou, justRelax, topMusic, readBook]})
             
         } catch (error) {
             res.json({flag: false, data: []})

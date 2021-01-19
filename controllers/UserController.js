@@ -132,10 +132,12 @@ class UserController {
 
         let user = await User.findById(idParams)
 
+
+
         user.fullname = fullname
         user.gender = gender
 
-        if(user.role === 2)
+        if(req.user.role === 2)
             user.role = role || 1
 
         try {
